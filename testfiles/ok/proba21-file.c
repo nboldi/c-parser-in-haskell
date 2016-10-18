@@ -1,0 +1,2 @@
+struct FILE {};
+FILE* fp;
