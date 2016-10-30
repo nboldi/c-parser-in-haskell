@@ -20,6 +20,7 @@ import Control.Lens.Plated
 import Data.Data
 import Data.Data.Lens
  
+import Data.SmartTrav
 import Data.SmartTrav.TH
 import Debug.Trace
 import Data.List
@@ -130,9 +131,11 @@ instance SmartTrav Decl where
   
 -- | Higher kinded version
 instance SmartTrav e => SmartTrav (ASTList e) where 
-  smartTrav desc asc f (ASTList elems info) 
-    = ASTList 
-       <$> (desc *> smartTrav desc asc (smartTrav desc asc f) elems <* asc)
+  smartTrav desc asc f ASTNil = ASTNil
+  smartTrav desc asc f (ASTCons head tail info) 
+    = ASTCons 
+       <$> (desc *> f head <* asc)
+       <$> (desc *> smartTrav desc asc (smartTrav desc asc f) tail <* asc)
        <*> f info  
 
   

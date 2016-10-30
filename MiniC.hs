@@ -362,8 +362,8 @@ assertSyntaxErrorTimeout msecs parser source failMess
              [] -> assertFailure $ "`" ++ source ++ "` should fail with a correct message. It failed without a message"
            Right val -> assertFailure $ "`" ++ source ++ "` should fail with a correct message. Parsed: " ++ show val
 
-instance Eq ParseError where
-  (==) = undefined
+-- instance Eq ParseError where
+--   (==) = undefined
   
 -- | Assert that two ASTs are structurally equivalent
 eqAST :: (Functor a, Eq (a ())) => a b -> a b -> Bool
